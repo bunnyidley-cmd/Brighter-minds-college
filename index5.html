@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BMTVC — Brighter Minds TVC</title>
+  <meta name="description" content="Brighter Minds Technical & Vocational College — practical, market-ready training across hospitality, baking, barista, hair & beauty, ICT, caregiving and more." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent:#ffd700;
+      --dark:#111;
+      --muted:#666;
+      --glass: rgba(255,255,255,0.85);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,Segoe UI,Arial;
+      color:var(--dark);
+      background: linear-gradient(270deg,#ff9a9e,#fad0c4,#a1c4fd,#c2e9fb);
+      background-size:800% 800%;
+      animation:gradientShift 18s ease infinite;
+      -webkit-font-smoothing:antialiased;
+      scroll-behavior:smooth;
+    }
+    @keyframes gradientShift{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    /* Floating banner */
+    .floating-banner{
+      position:fixed;
+      top:12px;
+      left:50%;
+      transform:translateX(-50%);
+      background:var(--accent);
+      color:#111;
+      padding:8px 18px;
+      border-radius:999px;
+      font-weight:600;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+      z-index:2000;
+      animation:floatText 6s ease-in-out infinite;
+    }
+    @keyframes floatText{
+      0%,100%{transform:translateX(-50%) translateY(0)}
+      50%{transform:translateX(-50%) translateY(-8px)}
+    }
+
+    header{
+      background:rgba(0,0,0,0.65);
+      color:#fff;
+      padding:28px 18px;
+      text-align:center;
+      position:relative;
+      clip-path: inset(0 0 0 0 round 0 0 20px 20px);
+    }
+    header h1{margin:0;font-size:clamp(20px,3vw,36px);letter-spacing:0.2px}
+    header p{margin:8px 0 0;opacity:0.92}
+
+    /* nav */
+    nav{display:flex;gap:18px;justify-content:center;padding:12px 8px;background:transparent;position:sticky;top:0;z-index:1200}
+    nav a{color:#fff;text-decoration:none;padding:6px 10px;border-radius:8px;font-weight:600}
+    nav a:hover{background:rgba(255,255,255,0.06)}
+
+    main{max-width:1200px;margin:28px auto;padding:0 18px}
+
+    /* sections */
+    section{margin:48px 0}
+    .lead{background:var(--glass);padding:28px;border-radius:14px;box-shadow:0 8px 20px rgba(20,20,20,0.08)}
+    .lead h2{margin:0 0 8px}
+    .lead p{margin:0;color:var(--muted)}
+
+    /* courses */
+    .courses-grid{
+      display:grid;
+      gap:18px;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      margin-top:18px;
+    }
+    .course{
+      background:rgba(255,255,255,0.96);
+      padding:16px;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.08);
+      transition:transform .28s,box-shadow .28s;
+      opacity:0;transform:translateY(18px);
+    }
+    .course.visible{opacity:1;transform:none}
+    .course:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.12)}
+    .course h3{margin:0 0 8px;font-size:1.05rem}
+    .course p{margin:0;color:var(--muted);font-size:.95rem}
+
+    /* Apply form */
+    .apply-box{max-width:700px;margin:20px auto;background:rgba(255,255,255,0.98);padding:20px;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,0.12)}
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+    label{display:block;font-weight:600;margin-top:10px;font-size:0.95rem}
+    input[type="text"],input[type="email"],input[type="tel"],select,textarea,input[type="file"]{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-top:6px;font-size:0.95rem;background:#fff;
+    }
+    button.primary{
+      margin-top:14px;background:var(--dark);color:#fff;padding:12px;border-radius:10px;border:0;font-weight:700;width:100%;cursor:pointer;
+      box-shadow:0 8px 20px rgba(0,0,0,0.12)
+    }
+    button.primary:hover{background:#333}
+
+    /* map styles */
+    .map-wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+    .map-card{flex:1;min-width:300px;background:rgba(255,255,255,0.96);padding:12px;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.08)}
+    .map-card h4{margin:0 0 8px}
+    .map-card iframe{width:100%;height:300px;border:0;border-radius:8px}
+
+    /* footer */
+    footer{background:rgba(0,0,0,0.87);color:#fff;padding:26px;text-align:center;border-top-left-radius:18px;border-top-right-radius:18px}
+    .socials{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:10px}
+    .socials img{width:28px;height:28px;filter:invert(1);opacity:0.95;transition:transform .2s}
+    .socials img:hover{transform:scale(1.12)}
+
+    /* floating whatsapp */
+    .wa-wrap{position:fixed;bottom:20px;right:18px;display:flex;gap:12px;flex-direction:row-reverse;z-index:1500}
+    .wa{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;box-shadow:0 8px 18px rgba(0,0,0,0.18);font-size:22px}
+    .wa.one{background:#25D366}
+    .wa.two{background:#128C7E}
+
+    /* toast */
+    .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:100px;background:#111;color:#fff;padding:10px 14px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .35s;z-index:2000}
+    .toast.show{opacity:1;pointer-events:auto}
+
+    /* small screens tweaks */
+    @media (max-width:640px){
+      nav{padding:8px}
+      .floating-banner{font-size:0.95rem;padding:6px 12px}
+      .wa{width:48px;height:48px;font-size:20px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="floating-banner" aria-hidden="true">🌟 Your Future is Greater ✨</div>
+
+  <header>
+    <h1>Brighter Minds Technical & Vocational College</h1>
+    <p>Practical skills • Market-ready • Gen-Z friendly</p>
+    <nav role="navigation" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#courses">Courses</a>
+      <a href="#apply">Apply</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about" class="lead">
+      <h2>About BMTVC</h2>
+      <p>We train students for real jobs — hands-on classes, modern curriculum, and industry partnerships. Our practical approach helps you quickly launch a career in hospitality, baking, ICT, care, beauty and more.</p>
+    </section>
+
+    <section id="courses">
+      <h2>Courses — Practical, Bite-sized & Career-focused</h2>
+      <div class="courses-grid" id="coursesGrid">
+        <article class="course reveal"><h3>Barista</h3><p>Professional espresso, milk-texturing, latte art and cafe operations — step into coffee entrepreneurship.</p></article>
+        <article class="course reveal"><h3>Baking & Pastry</h3><p>Learn artisanal bread, cakes and pastry production with focus on hygiene and small-bakery business skills.</p></article>
+        <article class="course reveal"><h3>Hair & Beauty</h3><p>Hands-on training in hairdressing, cutting, colouring, and makeup for salon-ready skills.</p></article>
+        <article class="course reveal"><h3>Nutrition</h3><p>Diet planning, food safety and community nutrition — useful for clinics, schools and wellness centres.</p></article>
+        <article class="course reveal"><h3>Computer Training</h3><p>From Office suites to basic web tools and practical IT skills used in modern workplaces.</p></article>
+        <article class="course reveal"><h3>Care Giver</h3><p>Practical caregiving for the elderly, children, and patients — first aid, patient handling and soft skills.</p></article>
+        <article class="course reveal"><h3>Hospitality & Management</h3><p>Reception, service, housekeeping, and management skills for hotels and event services.</p></article>
+      </div>
+    </section>
+
+    <section id="apply">
+      <h2>Apply — It’s quick</h2>
+      <div class="apply-box">
+        <form id="applyForm">
+          <div class="row">
+            <div class="col">
+              <label for="name">Full Name</label>
+              <input id="name" name="name" type="text" required>
+            </div>
+            <div class="col">
+              <label for="phone">Phone Number</label>
+              <input id="phone" name="phone" type="tel" placeholder="+2547..." required>
+            </div>
+          </div>
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required>
+
+          <label for="course">Select Course</label>
+          <select id="course" name="course" required>
+            <option>Barista</option>
+            <option>Baking & Pastry</option>
+            <option>Hair & Beauty</option>
+            <option>Nutrition</option>
+            <option>Computer Training</option>
+            <option>Care Giver</option>
+            <option>Hospitality & Management</option>
+          </select>
+
+          <label for="message">Message (optional)</label>
+          <textarea id="message" name="message" rows="3" placeholder="Tell us anything we should know..."></textarea>
+
+          <label for="idfile">Upload ID / Passport (optional)</label>
+          <input id="idfile" name="idfile" type="file" accept=".pdf,.jpg,.png">
+
+          <button type="submit" class="primary">Submit Application</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Find Us — Clear Maps</h2>
+      <p style="color:var(--muted)">Click the maps to open the location in Google Maps for directions and full details.</p>
+      <div class="map-wrap">
+        <div class="map-card">
+          <h4>Banana Branch — Kiambu</h4>
+          <!-- Reliable simple embed using q= (search) + output=embed -->
+          <iframe
+            src="https://www.google.com/maps?q=Banana,+Kiambu,+Kenya&z=15&output=embed"
+            allowfullscreen=""
+            loading="lazy"></iframe>
+        </div>
+
+        <div class="map-card">
+          <h4>Kayole Branch — Nairobi</h4>
+          <iframe
+            src="https://www.google.com/maps?q=Kayole,+Nairobi,+Kenya&z=15&output=embed"
+            allowfullscreen=""
+            loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:12px;color:var(--muted)">Main Branch: Banana, Kiambu • Branch: Kayole, Nairobi</p>
+    </section>
+  </main>
+
+  <footer>
+    <div>© 2025 Brighter Minds TVC — All rights reserved</div>
+    <div class="socials" aria-hidden="false" role="navigation" style="margin-top:12px">
+      <!-- Using simple-icons CDN svgs (latest) -->
+      <a href="#" aria-label="Facebook"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+      <a href="#" aria-label="Instagram"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+      <a href="#" aria-label="TikTok"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok"></a>
+      <a href="#" aria-label="X"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X"></a>
+      <a href="#" aria-label="LinkedIn"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+      <a href="#" aria-label="YouTube"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube"></a>
+      <a href="https://wa.me/254726301589" aria-label="WhatsApp"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp"></a>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp buttons (both numbers) -->
+  <div class="wa-wrap" aria-hidden="false">
+    <a class="wa two" title="+254 740 889 709" href="https://wa.me/254740889709" target="_blank" rel="noopener noreferrer">💬</a>
+    <a class="wa one" title="+254 726 301 589" href="https://wa.me/254726301589" target="_blank" rel="noopener noreferrer">📱</a>
+  </div>
+
+  <!-- toast -->
+  <div class="toast" id="toast">Application opened to WhatsApp & email — check your tabs.</div>
+
+  <!-- small chatbot placeholder (styled as Gemini assistant) -->
+  <div id="bot" style="position:fixed;right:20px;bottom:100px;width:320px;background:#fff;border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,0.15);overflow:hidden;display:none;z-index:1600">
+    <div style="background:linear-gradient(90deg,#0f172a,#111827);color:#fff;padding:10px;font-weight:700">Gemini Assistant</div>
+    <div id="botMsgs" style="padding:10px;height:200px;overflow:auto;font-size:14px;color:#222">
+      <div style="color:#666">Hi — how can I help? (This is a placeholder; tell me if you want live Gemini connection)</div>
+    </div>
+    <div style="display:flex;border-top:1px solid #eee;">
+      <input id="botInput" style="flex:1;border:0;padding:10px" placeholder="Ask about courses, fees..." />
+      <button onclick="fakeBotReply()" style="background:#111;color:#fff;border:0;padding:10px 12px">Ask</button>
+    </div>
+  </div>
+
+  <!-- scripts -->
+  <script>
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, {threshold:0.12});
+    reveals.forEach(r=>obs.observe(r));
+
+    // Toast helper
+    function showToast(msg){
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'),4000);
+    }
+
+    // Form submit -> opens both WhatsApp numbers and mailto as fallback
+    document.getElementById('applyForm').addEventListener('submit', function(ev){
+      ev.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const course = document.getElementById('course').value;
+      const message = document.getElementById('message').value.trim() || '-';
+      const text = `New Admission Application%0AName: ${name}%0APhone: ${phone}%0AEmail: ${email}%0ACourse: ${course}%0AMessage: ${message}`;
+
+      // open both whatsapp links (may be blocked by popup blockers in some browsers)
+      window.open('https://wa.me/254726301589?text=' + text, '_blank');
+      setTimeout(()=> window.open('https://wa.me/254740889709?text=' + text, '_blank'), 600);
+
+      // also open mailto as fallback so admin can get email copy
+      const mailto = 'mailto:brightermindsvocational@gmail.com'
+                    + '?subject=' + encodeURIComponent('New Application: ' + name)
+                    + '&body=' + encodeURIComponent(decodeURIComponent(text.replace(/%0A/g,'\n')));
+      window.open(mailto, '_blank');
+
+      showToast('Application opened to WhatsApp & email — check your tabs.');
+      // optional: clear form
+      // this.reset();
+    });
+
+    // chatbot placeholder toggle
+    let botShown=false;
+    function toggleBot(){
+      botShown = !botShown;
+      document.getElementById('bot').style.display = botShown ? 'block' : 'none';
+    }
+    // simple fake bot reply
+    function fakeBotReply(){
+      const input = document.getElementById('botInput');
+      const msgs = document.getElementById('botMsgs');
+      if(!input.value.trim()) return;
+      msgs.innerHTML += '<div style="margin:8px 0"><strong>You:</strong> ' + input.value + '</div>';
+      msgs.innerHTML += '<div style="margin:8px 0;color:#0b6bff"><strong>Gemini:</strong> Thanks! Our admissions team will contact you shortly.</div>';
+      msgs.scrollTop = msgs.scrollHeight;
+      input.value='';
+    }
+
+    // small keyboard shortcut: press C to open chat (convenience)
+    document.addEventListener('keydown', (e)=>{
+      if(e.key.toLowerCase()==='c'){ toggleBot(); }
+    });
+
+    // Optional: check if iframe loads (improve UX)
+    document.querySelectorAll('iframe').forEach( f=>{
+      f.addEventListener('error', ()=> console.warn('Map iframe failed to load.'));
+    });
+
+  </script>
+</body>
+</html>
